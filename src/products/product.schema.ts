@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument, Types } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 export type ProductDocument = HydratedDocument<Product>;
 
-export enum ProductCategories {
+export enum ProductCategoriesEnum {
     coffee = 'Coffee',
     equipment = 'Equipment',
     accesories = 'Accessories',
@@ -11,11 +11,16 @@ export enum ProductCategories {
 
 @Schema()
 export class Product{
-    @Prop({ enum: ProductCategories })
-    name: string;
+    id: string;
 
     @Prop()
-    price: Types.Decimal128;
+    name: string;
+    
+    @Prop({ enum: ProductCategoriesEnum })
+    category: string;
+
+    @Prop()
+    price: number;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
