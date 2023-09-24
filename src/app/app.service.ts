@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { JSONObject } from 'src/interfaces/json-interface';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getHealthCheck() :JSONObject {
+    return {
+      uptime: process.uptime(),
+    };
   }
 }
