@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import mongoose, { Model } from 'mongoose';
 import { CartsService } from './carts.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -9,7 +10,6 @@ import { CreateProductListCartDto } from './dtos/create-cart.dto';
 import { productFixture } from '../products/fixtures/products.fixture';
 import { Product, ProductDocument, ProductSchema } from '../products/product.schema';
 import { closeMongoConnection, rootMongooseTestModule } from '../../test/mongobd-memory-server';
-import { Logger } from '@nestjs/common';
 
 describe('CartsService', () => {
   let service: CartsService;
