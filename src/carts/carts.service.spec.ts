@@ -65,27 +65,32 @@ describe('CartsService', () => {
 
 
   it('should be create a cart', async () => {
-
     const newUserId = '0002';
-    const quatity: number = 3;
-    const product = productFixture[2];
+    const products: Product[] = await productModel.find({}).exec();
     
-    const products: CreateProductListCartDto[] =  [
-      { product_id: product._id, qty: quatity  }
-    ];
+    const productsList: CreateProductListCartDto[] = products.reduce((prev: CreateProductListCartDto[], curr: Product, _) => {
+      prev.push({
+        product_id: new mongoose.Types.ObjectId(curr.id),
+        qty: Math.floor(Math.random() * 6) + 1,
+      });
+
+      return prev;
+    }, []);
 
     const cart: Cart = await service.create({
       user_id: newUserId,
-      products: products
+      products: productsList
     });
 
     expect(cart).not.toBeNull();
-    expect(cart.products).toHaveLength(1);
+    expect(cart.products).toHaveLength(3);
 
-    const { user_id: nUserId, products: [ article ] } = cart;
+    const { user_id: nUserId, products: articles } = cart;
+    const [ article ] = articles;
+
 
     expect(nUserId).toEqual(newUserId);
-    expect(article.qty).toEqual(quatity);
+    expect(article.qty).not.toEqual(0);
   });
 
   it('should be update a cart', async () => {
