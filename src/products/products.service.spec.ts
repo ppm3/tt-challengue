@@ -5,7 +5,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { productFixture } from './fixtures/products.fixture';
 import { Product, ProductCategoriesEnum, ProductDocument, ProductSchema } from './product.schema';
 import { closeMongoConnection, rootMongooseTestModule } from '../../test/mongobd-memory-server';
-import { find } from 'rxjs';
 
 describe('ProductsService testing', () => {
   let service: ProductsService;
@@ -43,7 +42,7 @@ describe('ProductsService testing', () => {
   });
 
   it('should find one product by id', async () => {
-    const{ id: fId, name: fName } = productFixture[2];
+    const { id: fId, name: fName } = productFixture[2];
     const { name } = await service.findOne(fId);
 
     expect(name).toEqual(fName);
@@ -59,7 +58,7 @@ describe('ProductsService testing', () => {
   });
 
   afterEach(async () => {
-    productModel.deleteMany({});
+    await productModel.deleteMany({});
   });
 
   afterAll(async () => {

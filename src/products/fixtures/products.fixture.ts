@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
-import { CreateProductDto } from '../dto/create-product.dto';
+import { CreateProductDto } from '../dtos/create-product.dto';
+import { ProductCategoriesEnum } from '../product.schema';
 
 
 const id: Types.ObjectId = new Types.ObjectId();
@@ -7,19 +8,19 @@ const id: Types.ObjectId = new Types.ObjectId();
 export const productFixture: CreateProductDto[] = [
     {
       name: 'Package of cups',
-      category: 'Coffee',
+      category: ProductCategoriesEnum.coffee,
       price: 10.23,
     },
     {
       name: 'Vacuun machine',
-      category: 'Equipment',
+      category: ProductCategoriesEnum.equipment,
       price: 20.25,
     },
     {
       _id: id,
       id: id.toString(),
       name: 'Gloves',
-      category: 'Accessories',
+      category: ProductCategoriesEnum.accesories,
       price: 30.90,
     },
   ];

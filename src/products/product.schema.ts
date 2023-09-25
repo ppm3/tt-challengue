@@ -13,13 +13,13 @@ export enum ProductCategoriesEnum {
 export class Product{
     id: string;
 
-    @Prop()
+    @Prop({ required: true })
     name: string;
     
-    @Prop({ enum: ProductCategoriesEnum })
+    @Prop({ enum: ProductCategoriesEnum, required: true })
     category: string;
 
-    @Prop()
+    @Prop({ required: true })
     price: number;
 }
 
