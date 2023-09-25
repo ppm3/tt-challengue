@@ -1,4 +1,4 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, ObjectId } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductsService } from './products.service';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -31,7 +31,7 @@ describe('ProductsService testing', () => {
     expect(service).toBeDefined();
   });
 
-  it('should find all products', async () => {
+  it('should be find all products', async () => {
     const { name: fName } = productFixture[0];
     const products: Product[] = await service.findAll();
     const { name } = products[0];
@@ -39,6 +39,21 @@ describe('ProductsService testing', () => {
     expect(products).not.toBeNull();
     expect(products).toHaveLength(productFixture.length);
     expect(name).toEqual(fName);
+  });
+
+  it('should be get list of products using array id', async () => {
+    const allProducts = await service.findAll();
+
+    const ids: ObjectId[] = allProducts.reduce((prev, curr) => {
+        prev.push(curr.id);
+        return prev;
+    }, []);
+
+    const products = await service.findByIds(ids);
+
+    expect(products).not.toBeNull();
+    expect(products).toHaveLength(3);
+
   });
 
   it('should find one product by id', async () => {

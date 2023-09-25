@@ -6,10 +6,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { cartFixture, userId } from './fixtures/carts.fixture';
 import { Cart, CartDocument, CartSchema } from './cart.schema';
 import { ProductsService } from '../products/products.service';
-import { CreateProductListCartDto } from './dtos/create-cart.dto';
 import { productFixture } from '../products/fixtures/products.fixture';
 import { Product, ProductDocument, ProductSchema } from '../products/product.schema';
 import { closeMongoConnection, rootMongooseTestModule } from '../../test/mongobd-memory-server';
+import { CreateArticlesDto } from './dtos/create-articles.dto';
 
 describe('CartsService', () => {
   let service: CartsService;
@@ -63,12 +63,23 @@ describe('CartsService', () => {
     expect(cart.id).toEqual(cartId);
   });
 
-
-  it('should be create a cart', async () => {
+  it('should be create cart', async () => {
     const newUserId = '0002';
+
+    const cart = await service.create(newUserId);
+
+    expect(cart).not.toBeNull();
+
+    const { user_id: userId } = cart;
+
+    expect(userId).toEqual(newUserId);
+  });
+
+
+  it('should be add articles a cart', async () => {
+
     const products: Product[] = await productModel.find({}).exec();
-    
-    const productsList: CreateProductListCartDto[] = products.reduce((prev: CreateProductListCartDto[], curr: Product, _) => {
+    const productsList: CreateArticlesDto[] = products.reduce((prev: CreateArticlesDto[], curr: Product, _) => {
       prev.push({
         product_id: new mongoose.Types.ObjectId(curr.id),
         qty: Math.floor(Math.random() * 6) + 1,
@@ -77,19 +88,19 @@ describe('CartsService', () => {
       return prev;
     }, []);
 
-    const cart: Cart = await service.create({
-      user_id: newUserId,
-      products: productsList
-    });
+    const { id: cartId } = cartFixture[1];
 
-    expect(cart).not.toBeNull();
-    expect(cart.products).toHaveLength(3);
+    const updateCart = await service.addProducts(cartId, productsList);
 
-    const { user_id: nUserId, products: articles } = cart;
+
+    expect(updateCart).not.toBeNull();
+    expect(updateCart.products).toHaveLength(3);
+
+    const { user_id: nUserId, products: articles } = updateCart;
     const [ article ] = articles;
 
 
-    expect(nUserId).toEqual(newUserId);
+    expect(nUserId).toEqual(userId);
     expect(article.qty).not.toEqual(0);
   });
 

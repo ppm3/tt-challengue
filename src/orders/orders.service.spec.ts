@@ -64,8 +64,7 @@ describe('OrdersService', () => {
   it('should be create a order', async() => {
     const [ cart ] = cartFixture;
 
-    const order: Order = await service.create({
-      cart_id: new mongoose.Types.ObjectId(cart.id),
+    const order: Order = await service.create(cart.id, {
       totals: {
         products: 2,
         discounts: 1,
