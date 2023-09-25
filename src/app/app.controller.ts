@@ -7,6 +7,6 @@ export class AppController {
 
   @Get()
   getPing(): string {
-    return 'pong';
+    return 'PONG';
   }
 }
