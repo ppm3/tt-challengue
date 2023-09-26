@@ -1,73 +1,118 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a Nestjs project that uses MongoDB as a database.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  
 
-## Description
+**Installation**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+To install the project, run the following command:
 
-## Installation
-
+  
 ```bash
-$ npm install
+npm install
 ```
 
-## Running the app
+
+
+**Environment variables**
+
+The project uses the following environment variables:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+ - PORT
+ - ENV_VAR
+ - MONGO_DB_USER
+ - MONGO_DB_PASS
+ - MONGO_DB_DB
+ - MONGO_DB_PORT
 ```
+  
 
-## Test
+To set the environment variables, create a *.env* file in the root of the project, for a local environment, some variables have been created and are located in the `src/config` folder.
+
+**Execution**
+
+To run the project locally, run the following command in the terminal:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start
 ```
 
-## Support
+*Note:* The database is decoupled from the project, so you must have a MongoDB instance running
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+**Test**
+The project currently has several unit and integration tests.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+Take into consideration that the services are mocked, as well as dummy data exists to validate the logic of the project.
 
-Nest is [MIT licensed](LICENSE).
+
+Make sure to run the following command:
+
+```bash
+npm run test
+```
+
+![Currently testing](documentation/images/testing.png)
+
+# Postman collection
+
+The project includes a Postman collection that can be used to test the API. To import the collection, open Postman and click the Import button. Select the *postman_collection.json* file and click the Import button again, the collection can be found in the [documentation/postman](documentation/postman) folder.
+
+  
+
+## Local migration
+In order to run the API locally, it is necessary to be able to add products, a list of 10 products is found in the [documentation/MongoDB](documentation/MongoDB) folder.
+
+  
+
+Starting the application
+
+To start the application, run the following command:
+
+  
+````bash
+npm start
+````
+
+The application will be running on port `8080`.
+
+  
+
+# Usage
+
+To use the API, you can use Postman or another HTTP client. 
+
+
+The following are some examples of how to use the API:
+
+### Endpoints to control
+
+```bash
+#ping
+GET localhost:8080/ping
+
+#health check
+GET localhost:8080/healthcheck
+```
+
+Please, considerate the versioning of the API, for access to all endpoints, use a `v1` segment in the URL
+
+```bash
+# create CART
+POST localhost:8080/v1/cart
+
+# Add products to the cart
+POST localhost:8080/v1/cart/:cartId/products
+
+# Update quantity product to the previous product in the list cart 
+PUT localhost:8080/v1/cart/:cartId/products/:productId
+
+# Create order
+POST localhost:8080/v1/order/:cartId
+```
+
+
+# Contributions
+If you would like to contribute to this project, please fork the repository and create a pull request.

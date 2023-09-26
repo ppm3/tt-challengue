@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "672b00da-baff-492f-a7cf-ebf62ee9be8a",
+		"name": "Trafilea Tech Challengue",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "194476"
+	},
+	"item": [
+		{
+			"name": "Health check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/healthcheck",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PING",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/ping",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"userId\": \"0001\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{version}}/cart",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{version}}",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Products to cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"product_id\": \"651315366e0bff944cccfb94\",\r\n        \"qty\": 5\r\n    },\r\n    {\r\n        \"product_id\": \"651315366e0bff944cccfb96\",\r\n        \"qty\": 2\r\n    },\r\n    {\r\n        \"product_id\": \"651315366e0bff944cccfb9b\",\r\n        \"qty\": 1\r\n    },\r\n    {\r\n        \"product_id\": \"651315366e0bff944cccfb99\",\r\n        \"qty\": 2\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{version}}/cart/65131414d14fd893092c3cad/products",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{version}}",
+						"cart",
+						"65131414d14fd893092c3cad",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update quantity of product cart",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"quantity\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{version}}/cart/65131414d14fd893092c3cad/products/651315366e0bff944cccfb94",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{version}}",
+						"cart",
+						"65131414d14fd893092c3cad",
+						"products",
+						"651315366e0bff944cccfb94"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{version}}/order/65131414d14fd893092c3cad",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{version}}",
+						"order",
+						"65131414d14fd893092c3cad"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
