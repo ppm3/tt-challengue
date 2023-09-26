@@ -1,54 +1,63 @@
 import mongoose, {  ObjectId } from "mongoose";
 import { Articles } from "../carts/cart.schema";
 import { OrdersService } from "./orders.service";
+import { Product } from "../products/product.schema";
 import { CartsService } from "../carts/carts.service";
 import { ProductsService } from "../products/products.service";
-import { Controller, Logger, Param, Post, Version } from "@nestjs/common";
-import { Product, ProductCategoriesEnum } from "../products/product.schema";
+import { ProductCategoriesEnum } from "../enums/categories.enum";
+import { Controller, HttpException, HttpStatus, Logger, Param, Post, Version } from "@nestjs/common";
 
 
 @Controller('order')
 export class OrdersController {
-    readonly logger = new Logger(OrdersController.name);
-
     constructor(
         private readonly cartsService: CartsService,
         private readonly ordersService: OrdersService,
         private readonly productsService: ProductsService,
     ) { }
 
-    @Version('v1')
+    @Version('1')
     @Post('/:id')
     async create(@Param('id') cartId: string) {
-        const cart = await this.cartsService.findById(cartId);
-        const { products: articles } = cart;
-        let discounts = 0;
-
-        const ids: ObjectId[] = articles.reduce((prev: any[], curr: Articles) => {
-            prev.push(curr.product_id);
-            return prev;
-        }, [])
-
-        const products = await this.productsService.findByIds(ids);
-
-        const groupDiscounts = this.calculateDiscounts(products, articles);
-        const shipping = this.calculateShipping(products, articles);
-        let order = this.calculateOrder(products, articles);
-
-
-        for (const discount of groupDiscounts) {
-            discounts += discount;
-            order -= discount;
+        try {
+            const cart = await this.cartsService.findById(cartId);
+            const { products: articles } = cart;
+            let discounts = 0;
+    
+            const ids: ObjectId[] = articles.reduce((prev: any[], curr: Articles) => {
+                prev.push(curr.product_id);
+                return prev;
+            }, [])
+    
+            const products = await this.productsService.findByIds(ids);
+    
+            const groupDiscounts = this.calculateDiscounts(products, articles);
+            const shipping = this.calculateShipping(products, articles);
+            let order = this.calculateOrder(products, articles);
+    
+    
+            for (const discount of groupDiscounts) {
+                discounts += discount;
+            }
+    
+            discounts =  this.roundDecimals(discounts);
+            order = this.roundDecimals(order - discounts);
+    
+    
+            return await this.ordersService.create(cartId, {
+                totals: {
+                    products: articles.length,  // total products
+                    discounts,                  // discounts
+                    shipping,                   // total quantity of selected products (minus the quantity of equipments)
+                    order,                      // total to pay
+                },
+            });
+        } catch(error) {
+            throw new HttpException(
+                'Error processing your order, please try again later', 
+                HttpStatus.INTERNAL_SERVER_ERROR
+            );
         }
-
-        return await this.ordersService.create(cartId, {
-            totals: {
-                products: articles.length,  // total products
-                discounts,                  // discounts
-                shipping,                   // total quantity of selected products (minus the quantity of equipments)
-                order,                      // total to pay
-            },
-        });
     }
 
     // Calculate the total for the order
@@ -87,9 +96,7 @@ export class OrdersController {
     // Calculate the shipping cost for the order
     private calculateShipping(products: Product[], articles: Articles[]): number {
         const totalOrderProducts: number = articles.reduce((sum: number, article: Articles) => sum + article.qty, 0);
-        this.logger.debug(totalOrderProducts);
         const equipmentProducts = products.filter(product => product.category === ProductCategoriesEnum.equipment);
-        this.logger.debug(equipmentProducts);
 
         // If you buy more than 3 products from the Equipment category, then you get free shipping    
         if (equipmentProducts.length > 3) {
@@ -102,5 +109,9 @@ export class OrdersController {
         }
 
         return totalOrderProducts;
+    }
+
+    private roundDecimals(price: number): number {
+        return Math.round(price * 100) / 100;
     }
 }

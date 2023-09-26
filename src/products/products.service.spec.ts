@@ -1,9 +1,10 @@
-import mongoose, { Model, ObjectId } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
+import mongoose, { Model, ObjectId } from 'mongoose';
 import { ProductsService } from './products.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { productFixture } from './fixtures/products.fixture';
-import { Product, ProductCategoriesEnum, ProductDocument, ProductSchema } from './product.schema';
+import { ProductCategoriesEnum } from '../enums/categories.enum';
+import { Product, ProductDocument, ProductSchema } from './product.schema';
 import { closeMongoConnection, rootMongooseTestModule } from '../../test/mongobd-memory-server';
 
 describe('ProductsService testing', () => {

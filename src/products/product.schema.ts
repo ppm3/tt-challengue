@@ -1,13 +1,9 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { ProductCategoriesEnum } from "../enums/categories.enum";
 
 export type ProductDocument = HydratedDocument<Product>;
 
-export enum ProductCategoriesEnum {
-    coffee = 'Coffee',
-    equipment = 'Equipment',
-    accesories = 'Accessories',
-}
 
 @Schema()
 export class Product{

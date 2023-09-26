@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { ProductCategoriesEnum } from "../../products/product.schema";
+import { ProductCategoriesEnum } from "../../enums/categories.enum";
 
 let tmpProductsModel = [];
 

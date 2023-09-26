@@ -14,13 +14,11 @@ export class UserIdBody {
 
 @Controller('cart')
 export class CartsController {
-    readonly logger = new Logger(CartsController.name);
-
     constructor(
         private readonly cartService: CartsService
     ){}
 
-    @Version('v1')
+    @Version('1')
     @Post()
     async create(
         @Body() userIdBody: UserIdBody
@@ -33,7 +31,7 @@ export class CartsController {
         return cart;
     }
 
-    @Version('v1')
+    @Version('1')
     @Post('/:cartId/products')
     async addProductsToCart(
         @Param('cartId') cartId: string,
@@ -55,7 +53,7 @@ export class CartsController {
         return cart;
     }
 
-    @Version('v1')
+    @Version('1')
     @Put('/:cartId/products/:productId')
     async modifyProductQuantity(
         @Param('cartId') cartId: string,

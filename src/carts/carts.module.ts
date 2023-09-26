@@ -9,6 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       { name: Cart.name, schema: CartSchema }
     ]),
   ],
-  providers: [CartsService]
+  providers: [CartsService],
+  exports: [CartsService],
 })
 export class CartsModule {}
