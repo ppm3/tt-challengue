@@ -1,8 +1,8 @@
 import { Cart } from './cart.schema';
-import mongoose, { Model, Types } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateCartDto } from './dtos/create-cart.dto';
+import { CreateArticlesDto } from './dtos/create-articles.dto';
 
 @Injectable()
 export class CartsService {
@@ -10,9 +10,21 @@ export class CartsService {
         @InjectModel(Cart.name) private readonly cartModel: Model<Cart>
     ) {}
 
+    async create(userId: string): Promise<Cart> {
+        return this.cartModel.create({ 
+            user_id: userId
+        });
+    }
 
-    async create(cart: CreateCartDto ): Promise<Cart> {
-        return await this.cartModel.create(cart);
+    async addProducts(id: string, articles: CreateArticlesDto[]): Promise<Cart> {
+        return await this.cartModel.findOneAndUpdate(
+            {
+                _id: new mongoose.Types.ObjectId(id)
+            }, {
+                products: articles
+            },
+            { new: true }
+        );
     }
 
     async findById(id: string): Promise<Cart> {

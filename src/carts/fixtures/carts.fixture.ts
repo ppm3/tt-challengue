@@ -1,5 +1,4 @@
 import { Types } from "mongoose";
-import { CreateCartDto } from "../dtos/create-cart.dto";
 import { productFixture } from "../../products/fixtures/products.fixture";
 
 export const userId: string = '0001';
@@ -7,9 +6,9 @@ export const userId: string = '0001';
 const { _id } = productFixture[2];
 
 const id: Types.ObjectId = new Types.ObjectId();
+const updateId: Types.ObjectId = new Types.ObjectId();
 
-
-export const cartFixture: CreateCartDto[] = [
+export const cartFixture = [
     {
         _id: id,
         id: id.toString(),
@@ -20,5 +19,11 @@ export const cartFixture: CreateCartDto[] = [
                 qty: 3
             }
         ]
+    }, 
+    {
+        _id: updateId,
+        id: updateId.toString(),
+        user_id: userId,
+        products: [],
     }
 ]

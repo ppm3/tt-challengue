@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
-import apiConfig from 'src/config/api.config';
+import apiConfig from '../config/api.config';
 import { AppController } from './app.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CartsModule } from 'src/carts/carts.module';
-import mongoDBConfig from 'src/config/mongodb.config';
-import { CartsService } from 'src/carts/carts.service';
-import { OrdersModule } from 'src/orders/orders.module';
-import { OrdersService } from 'src/orders/orders.service';
+import { CartsModule } from '../carts/carts.module';
+import mongoDBConfig from '../config/mongodb.config';
+import { OrdersModule } from '../orders/orders.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HealthController } from './health-check.controller';
-import { ProductsModule } from 'src/products/products.module';
-import { ProductsService } from 'src/products/products.service';
+import { ProductsModule } from '../products/products.module';
+import { CartsController } from 'src/carts/carts.controller';
+import { OrdersController } from 'src/orders/orders.controller';
 
 @Module({
   imports: [
@@ -27,11 +26,11 @@ import { ProductsService } from 'src/products/products.service';
         dbName: config.get<string>('mongo.db'),
       }),
     }),
-    ProductsModule,
     CartsModule,
     OrdersModule,
+    ProductsModule,
   ],
-  controllers: [AppController, HealthController],
-  providers: [AppService, ProductsService, CartsService, OrdersService],
+  controllers: [ AppController, HealthController, CartsController, OrdersController ],
+  providers: [ AppService ],
 })
 export class AppModule {}

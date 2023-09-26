@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Order } from './order.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,7 +10,8 @@ export class OrdersService {
         @InjectModel(Order.name) private readonly orderModel: Model<Order>
     ){}
 
-    async create(order: CreateOrderDto): Promise<Order> {
+    async create(cartId: string, order: CreateOrderDto): Promise<Order> {
+        order.cart_id = new mongoose.Types.ObjectId(cartId);
         return await this.orderModel.create(order);
     }
 }

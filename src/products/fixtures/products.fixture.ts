@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { CreateProductDto } from '../dtos/create-product.dto';
-import { ProductCategoriesEnum } from '../product.schema';
+import { ProductCategoriesEnum } from '../../enums/categories.enum';
 
 
 const id: Types.ObjectId = new Types.ObjectId();
