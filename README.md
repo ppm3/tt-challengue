@@ -44,7 +44,9 @@ npm run start
 **Test**
 The project currently has several unit and integration tests.
 
+
 Take into consideration that the services are mocked, as well as dummy data exists to validate the logic of the project.
+
 
 Make sure to run the following command:
 
@@ -52,16 +54,16 @@ Make sure to run the following command:
 npm run test
 ```
 
-
+![Currently testing](documentation/images/testing.png)
 
 # Postman collection
 
-The project includes a Postman collection that can be used to test the API. To import the collection, open Postman and click the Import button. Select the *postman_collection.json* file and click the Import button again, the collection can be found in the `documentation/postman` folder.
+The project includes a Postman collection that can be used to test the API. To import the collection, open Postman and click the Import button. Select the *postman_collection.json* file and click the Import button again, the collection can be found in the [documentation/postman](documentation/postman) folder.
 
   
 
 ## Local migration
-In order to run the API locally, it is necessary to be able to add products, a list of 10 products is found in the `documenation/mongoDB` folder
+In order to run the API locally, it is necessary to be able to add products, a list of 10 products is found in the [documentation/MongoDB](documentation/MongoDB) folder.
 
   
 
