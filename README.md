@@ -116,3 +116,11 @@ POST localhost:8080/v1/order/:cartId
 
 # Contributions
 If you would like to contribute to this project, please fork the repository and create a pull request.
+
+
+# ToDO:
+
+- Add a collection for users, so that you can have a relationship between the coffee shop customer ID and the internal order-taking ID.
+- Create a collection per Store, which allows you to configure discounts, and free shipping according to business rules.
+- Add security validations to prevent them from accessing URLs and placing requests outside of the client environment.
+- Add endpoints for product CRUD
