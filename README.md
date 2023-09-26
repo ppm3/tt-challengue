@@ -67,7 +67,7 @@ In order to run the API locally, it is necessary to be able to add products, a l
 
   
 
-Starting the application
+# Starting the application
 
 To start the application, run the following command:
 
@@ -76,7 +76,7 @@ To start the application, run the following command:
 npm start
 ````
 
-The application will be running on port `8080`.
+*Note:* The application will be running on port `8080`.
 
   
 
