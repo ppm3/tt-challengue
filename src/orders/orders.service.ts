@@ -6,12 +6,12 @@ import { CreateOrderDto } from './dtos/create-order.dto';
 
 @Injectable()
 export class OrdersService {
-    constructor(
-        @InjectModel(Order.name) private readonly orderModel: Model<Order>
-    ){}
+  constructor(
+    @InjectModel(Order.name) private readonly orderModel: Model<Order>,
+  ) {}
 
-    async create(cartId: string, order: CreateOrderDto): Promise<Order> {
-        order.cart_id = new mongoose.Types.ObjectId(cartId);
-        return await this.orderModel.create(order);
-    }
+  async create(cartId: string, order: CreateOrderDto): Promise<Order> {
+    order.cart_id = new mongoose.Types.ObjectId(cartId);
+    return await this.orderModel.create(order);
+  }
 }

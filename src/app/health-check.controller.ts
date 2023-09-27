@@ -1,10 +1,10 @@
 import { AppService } from './app.service';
-import { Controller, Get, Header } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { JSONObject } from 'src/interfaces/json-interface';
 
 @Controller('healthcheck')
 export class HealthController {
-    constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getgetHealthCheck(): JSONObject {
