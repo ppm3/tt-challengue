@@ -30,7 +30,12 @@ import { OrdersController } from 'src/orders/orders.controller';
     OrdersModule,
     ProductsModule,
   ],
-  controllers: [ AppController, HealthController, CartsController, OrdersController ],
-  providers: [ AppService ],
+  controllers: [
+    AppController,
+    HealthController,
+    CartsController,
+    OrdersController,
+  ],
+  providers: [AppService],
 })
 export class AppModule {}

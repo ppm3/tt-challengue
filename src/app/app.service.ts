@@ -3,7 +3,7 @@ import { JSONObject } from 'src/interfaces/json-interface';
 
 @Injectable()
 export class AppService {
-  getHealthCheck() :JSONObject {
+  getHealthCheck(): JSONObject {
     return {
       uptime: process.uptime(),
     };

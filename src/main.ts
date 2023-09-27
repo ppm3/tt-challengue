@@ -13,7 +13,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.enableVersioning({
-    type: VersioningType.URI
+    type: VersioningType.URI,
   });
 
   mongoose.set('debug', config.get('env') === 'local');

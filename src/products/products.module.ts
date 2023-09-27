@@ -5,11 +5,9 @@ import { Product, ProductSchema } from './product.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Product.name, schema: ProductSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
   ],
   providers: [ProductsService],
-  exports: [ ProductsService ],
+  exports: [ProductsService],
 })
 export class ProductsModule {}
